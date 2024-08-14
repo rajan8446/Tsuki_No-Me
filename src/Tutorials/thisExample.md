@@ -239,3 +239,73 @@ The above code works but it can still be simplified. 👆
     // arrow function does not rebind this and inherits this from parent
 ```
 https://dev.to/liaowow/take-this-quiz-understand-how-this-works-in-javascript-44dj
+
+
+
+function aa() {
+  let a = 10;
+  console.log(this.a)
+}
+aa()
+Output=> undefined // this will refer the global object, bcoz when funcion is not a property of any object then it will refers to the global object(window). and in the global there is no "a" defined, so it will give you undefined.
+
+const bb = () => {
+  let b = 20;
+  console.log(this.b)
+}
+bb()
+Output=> undefined //
+
+
+const obj = {
+  name: "rajan",
+  age: 27,
+  intro: function() {
+    console.log(`My name is ${this.name}`)
+  }
+}
+obj.intro() // output=>My name is rajan
+
+const obj1 = {
+  name: "rajan",
+  age: 27,
+  intro: () => {
+    console.log(`My name is ${this.name}`)
+  }
+}
+obj1.intro() // output=>undefined
+Arrow functions do not have their own this context. Instead, they inherit this from the surrounding (lexical) context in which they were defined.
+In your case, the intro method is defined as an arrow function inside the obj3 object. Since it's an arrow function, this inside the intro method will not refer to the obj3 object but to the this value of the context in which obj3 was created.
+
+
+
+let name1 = "kumar";
+
+const obj2 = {
+  name: "rajan",
+  age: 27,
+  intro: function() {
+    console.log(`My name is ${this.name1}`)
+  }
+}
+obj2.intro();  output=> undefined
+//this will give undefined bcoz name1 is not defined inside the obj2.
+
+const obj3 = {
+  name: "rajan",
+  age: 27,
+  intro: () => {
+    console.log(`My name is ${this.name1}`)
+  }
+}
+obj3.intro() // output=>My name is rajan.
+//in arrow function this refers to surrounding (lexical) context in which they were defined. so this refers to the surrounding context that mean obj3 is defined in global object , and name1 is defined also in global. 
+
+const obj4 = {
+  name: "rajan",
+  age: 27,
+  intro: () => {
+    console.log(`My name is ${this.name1}`)
+  }
+}
+obj4.intro()
